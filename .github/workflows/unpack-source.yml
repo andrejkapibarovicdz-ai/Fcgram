@@ -1,0 +1,27 @@
+name: Unpack project source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repository files
+        uses: actions/checkout@v4
+
+      - name: Unpack project
+        run: |
+          unzip -o F_craft_gramm_v03_source.zip -d .
+          rm F_craft_gramm_v03_source.zip
+
+      - name: Save project files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add F_craft_gramm project source"
+          git push
